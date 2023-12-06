@@ -1,5 +1,6 @@
 import React from 'react'
 import { TitleBanner } from '../../components/TitleBanner'
+import { EventList } from './EventList'
 
 export const vendorList = {
   movies: {
@@ -139,6 +140,7 @@ export const Events = ({type}) => {
   return (
     <>
       <TitleBanner title={vendorList[type].title} subtitle={vendorList[type].subtitle} />
+      <EventList />
     </>
    
    

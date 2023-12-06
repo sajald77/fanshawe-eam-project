@@ -7,10 +7,10 @@ import {
 
 import './css/style.css';
 
-import './charts/ChartjsConfig';
-import { Dashboard, Login } from './pages';
+import {  Login } from './pages';
 import { Vendors } from './pages/vendors/Vendors';
 import { Events } from './pages/events/Events';
+import { Dashboard } from './pages/dashboard/Dashboard';
 
 // Import pages
 
