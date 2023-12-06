@@ -8,9 +8,11 @@ import {
 import './css/style.css';
 
 import './charts/ChartjsConfig';
+import { Dashboard, Login } from './pages';
+import { Vendors } from './pages/vendors/Vendors';
+import { Events } from './pages/events/Events';
 
 // Import pages
-import Dashboard from './pages/Dashboard';
 
 function App() {
 
@@ -25,7 +27,18 @@ function App() {
   return (
     <>
       <Routes>
+        <Route exact path="/movies/:id" element={<Events type='movies'/>} />
+        <Route exact path="/movies/" element={<Vendors type='movies'/>} />
+        <Route exact path="/concerts/:id" element={<Events type='concerts'/>} />
+        <Route exact path="/concerts" element={<Vendors type='concerts'/>} />
+        <Route exact path="/airlines/:id" element={<Events type='airlines'/>} />
+        <Route exact path="/airlines" element={<Vendors type='airlines'/>} />
+
+
+        <Route exact path="/login" element={<Login />} />
+
         <Route exact path="/" element={<Dashboard />} />
+
       </Routes>
     </>
   );
