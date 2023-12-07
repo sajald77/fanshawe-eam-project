@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { TitleBanner } from '../../components/TitleBanner'
 import { EventList } from './EventList'
+import { useParams } from 'react-router-dom'
+import { api } from '../../config'
 
 export const vendorList = {
   movies: {
@@ -17,130 +19,123 @@ export const vendorList = {
   }
 }
 
+
 const people = [
   {
-    name: 'Leslie Alexander',
-    email: 'leslie.alexander@example.com',
-    role: 'Co-Founder / CEO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    name: 'Jane Cooper',
+    title: 'Paradigm Representative',
+    role: 'Admin',
+    email: 'janecooper@example.com',
     id: '1',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z',
+    imageUrl:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
   },
   {
-    name: 'Michael Foster',
-    email: 'michael.foster@example.com',
-    role: 'Co-Founder / CTO',
+    name: 'Jane Cooper',
+    title: 'Paradigm Representative',
+    role: 'Admin',
+    email: 'janecooper@example.com',
+    id: '2',
     imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    id: '1',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z',
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
   },
   {
-    name: 'Dries Vincent',
-    email: 'dries.vincent@example.com',
-    role: 'Business Relations',
+    name: 'Jane Cooper',
+    title: 'Paradigm Representative',
+    role: 'Admin',
+    email: 'janecooper@example.com',
+    id: '3',
     imageUrl:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    id: '1',
-    lastSeen: null,
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
   },
   {
-    name: 'Lindsay Walton',
-    email: 'lindsay.walton@example.com',
-    role: 'Front-end Developer',
+    name: 'Jane Cooper',
+    title: 'Paradigm Representative',
+    role: 'Admin',
+    email: 'janecooper@example.com',
+    id: '4',
     imageUrl:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    id: '1',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z',
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
   },
   {
-    name: 'Courtney Henry',
-    email: 'courtney.henry@example.com',
-    role: 'Designer',
+    name: 'Jane Cooper',
+    title: 'Paradigm Representative',
+    role: 'Admin',
+    email: 'janecooper@example.com',
+    id: '5',
     imageUrl:
-      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    id: '1',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z',
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
   },
   {
-    name: 'Tom Cook',
-    email: 'tom.cook@example.com',
-    role: 'Director of Product',
+    name: 'Jane Cooper',
+    title: 'Paradigm Representative',
+    role: 'Admin',
+    email: 'janecooper@example.com',
+    id: '6',
     imageUrl:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    id: '1',
-    lastSeen: null,
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
   },
   {
-    name: 'Leslie Alexander',
-    email: 'leslie.alexander@example.com',
-    role: 'Co-Founder / CEO',
+    name: 'Jane Cooper',
+    title: 'Paradigm Representative',
+    role: 'Admin',
+    email: 'janecooper@example.com',
+    id: '7',
     imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    id: '1',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z',
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
   },
   {
-    name: 'Michael Foster',
-    email: 'michael.foster@example.com',
-    role: 'Co-Founder / CTO',
+    name: 'Jane Cooper',
+    title: 'Paradigm Representative',
+    role: 'Admin',
+    email: 'janecooper@example.com',
+    id: '8',
     imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    id: '1',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z',
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
   },
-  {
-    name: 'Dries Vincent',
-    email: 'dries.vincent@example.com',
-    role: 'Business Relations',
-    imageUrl:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    id: '1',
-    lastSeen: null,
-  },
-  {
-    name: 'Lindsay Walton',
-    email: 'lindsay.walton@example.com',
-    role: 'Front-end Developer',
-    imageUrl:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    id: '1',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z',
-  },
-  {
-    name: 'Courtney Henry',
-    email: 'courtney.henry@example.com',
-    role: 'Designer',
-    imageUrl:
-      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    id: '1',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z',
-  },
-  {
-    name: 'Tom Cook',
-    email: 'tom.cook@example.com',
-    role: 'Director of Product',
-    imageUrl:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    id: '1',
-    lastSeen: null,
-  },
+  // More people...
 ]
 
 export const Events = ({type}) => {
+
+  const params = useParams()
+
+
+  const [events, setEvents] = useState([])
+
+  useEffect(() => {
+console.log('checking params', params)
+    if(!params.id){
+      return
+    }
+
+    const getEvents = async () => {
+
+      try {
+
+        const response = await api.get(`/events/${params.id}`)
+        console.log('cheking vendors response', response)
+        setEvents(response.data) 
+      } catch (error) {
+        console.log('error fetching vendors', error)
+      }
+    }
+    getEvents()
+   
+  }, [params.id])
+  
+
+
   return (
     <>
       <TitleBanner title={vendorList[type].title} subtitle={vendorList[type].subtitle} />
-      <EventList />
+      <EventList list={events} keys={{
+        id: 'eventId',
+        title: 'eventName',
+        subTitle: 'location',
+        info: `fromDestination`,
+        imageUrl: 'imageUrl'
+      }}/>
     </>
    
    

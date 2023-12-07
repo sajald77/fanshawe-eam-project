@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { TitleBanner } from '../../components/TitleBanner'
 import { TableComponent } from './components/TableComponent'
+import { api } from '../../config'
 
 export const vendorList = {
   movies: {
@@ -137,10 +138,32 @@ const people = [
 ]
 
 export const Vendors = ({type}) => {
+
+  const [vendors, setVendors] = useState([])
+
+  useEffect(() => {
+
+    const getVendors = async () => {
+
+      try {
+
+        const response = await api.get(`/vendors/${type}`)
+        console.log('cheking vendors response', response)
+        setVendors(response.data) 
+      } catch (error) {
+        console.log('error fetching vendors', error)
+      }
+    }
+    getVendors()
+   
+  }, [type])
+  
+
+
   return (
     <>
       <TitleBanner title={vendorList[type].title} subtitle={vendorList[type].subtitle} />
-      <TableComponent list={people} keys={{id: 'id', title: 'name', subTitle: 'email', imageUrl: 'imageUrl', info: 'role'}} />
+      <TableComponent list={vendors} keys={{id: 'vendorId', title: 'vendorName', subTitle: 'email', imageUrl: 'imageUrl', info: 'address'}} />
     </>
    
    

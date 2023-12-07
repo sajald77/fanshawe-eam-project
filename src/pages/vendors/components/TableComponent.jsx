@@ -1,5 +1,6 @@
 import { MdChevronRight } from "react-icons/md"
 import { useNavigate } from "react-router-dom"
+import { imageRectangle } from "../../../constants";
 
 
 
@@ -19,7 +20,7 @@ export const TableComponent = ({list, keys}) =>  {
       {list.map((item) => (
         <li key={item[keys.subTitle]} className="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6 hover:cursor-pointer" onClick={() => handleClick(item[keys.id])}>
           <div className="flex min-w-0 gap-x-4">
-            <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={item[keys.imageUrl]} alt="" />
+            <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={item[keys.imageUrl] || imageRectangle} alt="" />
             <div className="min-w-0 flex-auto">
               <p className="text-sm font-semibold leading-6 text-gray-900">
                   <span className="absolute inset-x-0 -top-px bottom-0" />
